@@ -1,11 +1,32 @@
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
+import { redirect } from "../helpers/alerts"
+import { end_points } from "../services/api"
 const Login = () => {
   const [getEmail, setEmail] = useState("")
   const [getPassword, setPassword] = useState("")
+  const [getUsers, setUsers] = useState([])
+
+  function fetchUsers() {
+    fetch(end_points.users)
+      .then((response) => response.json())
+      .then((data) => setUsers(data))
+      .catch((error) => console.log(error))
+  }
+
+  useEffect(() => {
+    fetchUsers()
+  }, [])
+
+
+  const findUser = () => {
+    let user = getUsers.find((item) => getEmail === item.email && getPassword === item.password)
+    return user
+  }
 
   function signIn() {
-    if (getEmail == "correo@correo.com" && getPassword == "admin") {
-      alert(getEmail + " Bienvenido al sistema...")
+    console.log(findUser())
+    if (findUser()) {
+      redirect(findUser().fullName + " Bienvenido al sistema...")
     } else {
       alert("El correo o la contraseña son incorrectos...")
     }
