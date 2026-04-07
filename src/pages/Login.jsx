@@ -1,22 +1,49 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import {redirect} from "../helpers/alerts.js" 
+import {end_points} from "../services/api.js"
 const Login = () => {
   const [getEmail, setEmail] = useState("")
   const [getPassword, setPassword] = useState("")
   const [getRemember, setRemember] = useState("")
+  const [getUsers, setUsers] = useState([])
+
+  function fetchUsers(){
+    fetch(end_points.users).then((response)=> response.json()).then((data)=> setUsers(data)).catch((error)=> console.log(error))
+  }
+
+  useEffect(()=> {
+    fetchUsers()
+  }, [])
+
+  const findUser = ()=> {
+    let user = getUsers.find((item)=> getEmail === item.email && getPassword === item.password )
+    return user
+  }
+  
+  //fetchUsers();
+  //console.log(getUsers)
 
   function signIn(){
+    if(findUser()){
+      redirect(findUser().fullName + " Bienvenido al sistema ")
+    } else {
+      alert("El correo o la contraseña son incorrectas...")
+    }
+  }
+
+  /*function signIn(){
     if(getEmail == "correo@correo.com" && getPassword == "admin"){
       alert(getEmail + " Bienvenido al sistema ")
     } else {
       alert("El correo o la contraseña son incorrectas...")
     }
-  } 
+  } */
 
   return (
     <div class="flex h-full grow flex-col">
       <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-6 lg:px-10 py-4 bg-white dark:bg-slate-900">
         <div class="flex items-center gap-3 text-primary">
-          <h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Nexus ATS</h2>
+          <h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Omega ATS</h2>
         </div>
         <div class="flex items-center gap-4">
           <a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Help Center</a>
@@ -57,13 +84,13 @@ const Login = () => {
             <button onClick={()=>{signIn() }} class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-4 rounded transition-colors flex items-center justify-center gap-2" type="button"> 
               {/* text-dark border-black  */}
               Sign In 
-              <span class="material-symbols-outlined text-sm">arrow_forward</span>
-            </button>
-          </form>
+              <span class="material-symbols-outlined text-sm"> forward_ arrow </span> 
+            </button> 
+          </form> 
           <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 text-center">
             <p class="text-sm text-slate-600 dark:text-slate-400">
               Don't have an account?
-              <a class="text-primary font-bold hover:underline" href="#">Register now</a>
+              <a class="text-primary font-bold hover:underline" href="#"> Register now</a>
             </p>
           </div>
         </div>
