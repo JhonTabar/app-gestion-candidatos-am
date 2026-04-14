@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import {redirect} from "../helpers/alerts.js" 
 import {end_points} from "../services/api.js"
+import { saveLocalStorage } from "../helpers/local-storage"
 const Login = () => {
   const [getEmail, setEmail] = useState("")
   const [getPassword, setPassword] = useState("")
@@ -24,10 +25,12 @@ const Login = () => {
   //console.log(getUsers)
 
   function signIn(){
+    console.log(findUser())
     if(findUser()){
-      redirect(findUser().fullName + " Bienvenido al sistema ")
+      saveLocalStorage()
+      redirect(findUser().fullName + " Bienvenido al sistema ", "/dashboard", 'success')
     } else {
-      alert("El correo o la contraseña son incorrectas...")
+      redirect("El correo o la contraseña son incorrectas...", "/", 'error')
     }
   }
 
