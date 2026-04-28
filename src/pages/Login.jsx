@@ -47,7 +47,7 @@ const Login = () => {
       <main class="flex-1 flex items-center justify-center p-6">
         <div class="w-full max-w-md bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-8 lg:p-10">
           <div class="flex flex-col items-center mb-8">
-            <div class="bg-primary/10 p-3 rounded-full mb-4">
+            <div class="bg-primary/10 p-3 rounded-full mb-4"> 
               <span class="material-symbols-outlined text-primary text-3xl">login</span>
             </div>
             <h1 class="text-slate-900 dark:text-slate-100 text-2xl font-bold tracking-tight">Welcome Back</h1>
